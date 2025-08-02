@@ -15,7 +15,6 @@ import time
 import json
 import logging
 import asyncio
-import numpy as np
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, asdict
 from datetime import datetime, timedelta
