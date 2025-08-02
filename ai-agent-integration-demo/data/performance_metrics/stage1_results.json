@@ -1,0 +1,72 @@
+[
+  {
+    "query": "Our enterprise SSO is failing for 15,000 employees - urgent help needed!",
+    "response_time": 9.460312128067017,
+    "confidence": 0.6,
+    "sources": [
+      "Enterprise SSO Integration Failure",
+      "Customer Churn Prediction Alert - Enterprise Accounts"
+    ],
+    "timestamp": "2025-08-02T11:45:07.694539"
+  },
+  {
+    "query": "Trading system latency spiked to 50ms during market open - we're losing millions per minute",
+    "response_time": 8.51946234703064,
+    "confidence": 0.6,
+    "sources": [
+      "Real-Time Trading System Latency Spike",
+      "Multi-Million Dollar Transaction Processing Delays"
+    ],
+    "timestamp": "2025-08-02T11:45:16.214219"
+  },
+  {
+    "query": "Suspicious API activity detected - 10,000 requests from single IP accessing customer data",
+    "response_time": 12.09041452407837,
+    "confidence": 0.6,
+    "sources": [
+      "Cybersecurity Incident - Suspicious API Access Patterns",
+      "Global Supply Chain API Synchronization Issues"
+    ],
+    "timestamp": "2025-08-02T11:45:28.304885"
+  },
+  {
+    "query": "ML model accuracy dropped 15% in production affecting 50,000 users",
+    "response_time": 7.795726299285889,
+    "confidence": 0.3,
+    "sources": [
+      "AI Model Performance Degradation in Production"
+    ],
+    "timestamp": "2025-08-02T11:45:36.100846"
+  },
+  {
+    "query": "High-value customer with $500K ARR showing churn signals - need immediate intervention",
+    "response_time": 10.157531976699829,
+    "confidence": 0.6,
+    "sources": [
+      "Multi-Million Dollar Transaction Processing Delays",
+      "Customer Churn Prediction Alert - Enterprise Accounts"
+    ],
+    "timestamp": "2025-08-02T11:45:46.258624"
+  },
+  {
+    "query": "Supply chain API sync failures affecting global operations across 40 countries",
+    "response_time": 15.197109460830688,
+    "confidence": 0.6,
+    "sources": [
+      "Global Supply Chain API Synchronization Issues",
+      "Cybersecurity Incident - Suspicious API Access Patterns"
+    ],
+    "timestamp": "2025-08-02T11:46:01.455977"
+  },
+  {
+    "query": "HIPAA compliance violation detected - potential $50K fine exposure",
+    "response_time": 10.84694218635559,
+    "confidence": 0.8,
+    "sources": [
+      "Healthcare Data Privacy Compliance Violations",
+      "Multi-Million Dollar Transaction Processing Delays",
+      "Global Supply Chain API Synchronization Issues"
+    ],
+    "timestamp": "2025-08-02T11:46:12.303249"
+  }
+]
