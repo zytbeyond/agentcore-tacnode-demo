@@ -32,14 +32,7 @@ def create_agentcore_gateway_with_dynamodb():
                     'searchType': 'SEMANTIC'
                 }
             },
-            'authorizerType': 'CUSTOM_JWT',
-            'authorizerConfiguration': {
-                'customJWTAuthorizer': {
-                    'discoveryUrl': 'https://bedrock-agentcore.amazonaws.com/.well-known/openid_configuration',
-                    'allowedAudience': ['agentcore-dynamodb'],
-                    'allowedClients': ['agentcore-client']
-                }
-            }
+            'authorizerType': 'NONE'
         }
         
         print(f"   Name: {gateway_config['name']}")
