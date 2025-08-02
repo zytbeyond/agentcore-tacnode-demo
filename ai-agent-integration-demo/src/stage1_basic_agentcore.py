@@ -19,6 +19,9 @@ import boto3
 from botocore.exceptions import ClientError
 from dotenv import load_dotenv
 
+# Import our AgentCore DynamoDB client
+from agentcore_dynamodb_client import AgentCoreDynamoDBClient
+
 # Load environment variables
 load_dotenv()
 
@@ -39,10 +42,13 @@ class QueryResult:
     sources: List[str]
     timestamp: datetime
 
-class BasicKnowledgeBase:
-    """Simple in-memory knowledge base with keyword matching"""
+class AgentCoreKnowledgeBase:
+    """AgentCore with DynamoDB backend for enterprise knowledge management"""
 
     def __init__(self):
+        # Initialize AgentCore DynamoDB client
+        self.dynamodb_client = AgentCoreDynamoDBClient()
+
         # Enterprise-grade knowledge base with realistic business scenarios
         self.knowledge_items = [
             {
@@ -127,11 +133,61 @@ class BasicKnowledgeBase:
             }
         ]
 
+        # Populate enterprise knowledge base in DynamoDB after initialization
+        self._populate_enterprise_knowledge()
+
+    def _populate_enterprise_knowledge(self):
+        """Populate DynamoDB with enterprise knowledge base"""
+        print("🗄️  Populating AgentCore DynamoDB with enterprise knowledge...")
+
+        for item in self.knowledge_items:
+            # Store each knowledge item in DynamoDB via AgentCore
+            self.dynamodb_client.store_knowledge_item(
+                content=f"{item['title']}: {item['content']}",
+                category=item['category'],
+                source="enterprise_knowledge_base",
+                confidence=0.95
+            )
+
+        print(f"✅ Stored {len(self.knowledge_items)} enterprise knowledge items in AgentCore DynamoDB")
+
     def search(self, query: str) -> List[Dict[str, Any]]:
-        """Simple keyword-based search"""
+        """Search using AgentCore DynamoDB backend with keyword matching"""
+        print(f"🔍 Searching AgentCore DynamoDB for: {query}")
+
+        # First try to get recent knowledge items from DynamoDB
+        try:
+            recent_items = self.dynamodb_client.get_recent_activity(hours=24)
+            knowledge_items = [item for item in recent_items if item.get('context_type') == 'knowledge']
+            print(f"📊 Found {len(knowledge_items)} knowledge items in AgentCore DynamoDB")
+        except Exception as e:
+            print(f"⚠️  DynamoDB search failed, falling back to local search: {str(e)}")
+            knowledge_items = []
+
+        # Combine DynamoDB results with local knowledge for comprehensive search
         query_lower = query.lower()
         results = []
 
+        # Search DynamoDB knowledge items
+        for item in knowledge_items:
+            score = 0
+            content = item.get('content', '')
+
+            if query_lower in content.lower():
+                score += 3
+
+            if score > 0:
+                results.append({
+                    "id": item.get('session_id', 'dynamo_item'),
+                    "title": content.split(':')[0] if ':' in content else "DynamoDB Knowledge",
+                    "content": content,
+                    "category": item.get('metadata', {}).get('category', 'unknown'),
+                    "tags": [],
+                    "relevance_score": score,
+                    "source": "agentcore_dynamodb"
+                })
+
+        # Also search local knowledge items for comparison
         for item in self.knowledge_items:
             score = 0
 
@@ -151,31 +207,41 @@ class BasicKnowledgeBase:
             if score > 0:
                 results.append({
                     **item,
-                    "relevance_score": score
+                    "relevance_score": score,
+                    "source": "local_knowledge"
                 })
 
-        # Sort by relevance score
+        # Sort by relevance score and return top results
         results.sort(key=lambda x: x["relevance_score"], reverse=True)
-        return results[:3]  # Return top 3 results
+        top_results = results[:3]
 
-class BasicAgentCore:
-    """Basic implementation using AWS Bedrock AgentCore"""
+        print(f"📋 Returning {len(top_results)} results from AgentCore search")
+        return top_results
+
+class AgentCoreWithDynamoDB:
+    """AgentCore implementation with DynamoDB backend for enterprise knowledge"""
 
     def __init__(self):
         self.bedrock_client = boto3.client(
             'bedrock-runtime',
             region_name=os.getenv('AWS_REGION', 'us-east-1')
         )
-        self.knowledge_base = BasicKnowledgeBase()
+        self.knowledge_base = AgentCoreKnowledgeBase()
+        self.dynamodb_client = self.knowledge_base.dynamodb_client
         self.model_id = os.getenv('BEDROCK_MODEL_ID', 'anthropic.claude-3-sonnet-20240229-v1:0')
 
+        print("🚀 AgentCore initialized with DynamoDB backend (us-east-1)")
+        print(f"📊 DynamoDB Table: {self.dynamodb_client.table_name}")
+        print(f"🤖 Bedrock Model: {self.model_id}")
+
     def query(self, user_query: str) -> QueryResult:
-        """Process a user query and return a response"""
+        """Process a user query using AgentCore with DynamoDB backend"""
         start_time = time.time()
+        session_id = f"enterprise_demo_{int(time.time())}"
 
         try:
-            # Step 1: Search knowledge base (simple keyword matching)
-            logger.info(f"Searching knowledge base for: {user_query}")
+            # Step 1: Search AgentCore DynamoDB knowledge base
+            logger.info(f"Searching AgentCore DynamoDB for: {user_query}")
             kb_results = self.knowledge_base.search(user_query)
 
             # Step 2: Prepare context for LLM
@@ -186,10 +252,33 @@ class BasicAgentCore:
 
             response_time = time.time() - start_time
 
-            # Calculate confidence based on knowledge base matches
+            # Calculate confidence based on AgentCore DynamoDB matches
+            dynamodb_results = [r for r in kb_results if r.get('source') == 'agentcore_dynamodb']
             confidence = min(0.8, len(kb_results) * 0.3) if kb_results else 0.2
 
+            # Boost confidence if we found DynamoDB results
+            if dynamodb_results:
+                confidence = min(0.9, confidence + 0.2)
+
             sources = [item["title"] for item in kb_results]
+
+            # Step 4: Store conversation context in AgentCore DynamoDB
+            try:
+                self.dynamodb_client.store_conversation_context(
+                    session_id=session_id,
+                    user_message=user_query,
+                    agent_response=response,
+                    metadata={
+                        "response_time": response_time,
+                        "confidence": float(confidence),
+                        "sources_found": len(sources),
+                        "dynamodb_sources": len(dynamodb_results),
+                        "demo_stage": "stage1_agentcore_dynamodb"
+                    }
+                )
+                print(f"💾 Stored conversation in AgentCore DynamoDB (session: {session_id})")
+            except Exception as e:
+                print(f"⚠️  Failed to store conversation in DynamoDB: {str(e)}")
 
             result = QueryResult(
                 query=user_query,
@@ -200,11 +289,11 @@ class BasicAgentCore:
                 timestamp=datetime.now()
             )
 
-            logger.info(f"Query processed in {response_time:.2f}s with confidence {confidence:.2f}")
+            logger.info(f"AgentCore query processed in {response_time:.2f}s with confidence {confidence:.2f}")
             return result
 
         except Exception as e:
-            logger.error(f"Error processing query: {str(e)}")
+            logger.error(f"Error processing AgentCore query: {str(e)}")
             response_time = time.time() - start_time
             return QueryResult(
                 query=user_query,
@@ -268,14 +357,17 @@ Assistant: I'll help you answer this question based on the information I have av
             logger.error(f"Unexpected error in response generation: {str(e)}")
             return "I encountered an unexpected error while generating a response. Please try again."
 
-def demonstrate_basic_agentcore():
-    """Demonstrate the basic AgentCore implementation"""
-    print("=" * 60)
-    print("STAGE 1: Basic AWS Bedrock AgentCore Demo")
-    print("=" * 60)
+def demonstrate_agentcore_with_dynamodb():
+    """Demonstrate AgentCore with DynamoDB backend"""
+    print("=" * 80)
+    print("STAGE 1: AWS Bedrock AgentCore + DynamoDB Integration Demo")
+    print("=" * 80)
+    print("🎯 Demonstrating AgentCore with DynamoDB context store")
+    print("📍 Region: us-east-1")
+    print("🗄️  Backend: AgentCoreContextStore DynamoDB table")
     print()
 
-    agent = BasicAgentCore()
+    agent = AgentCoreWithDynamoDB()
 
     # Enterprise test queries that demonstrate real business impact
     test_queries = [
@@ -335,8 +427,12 @@ def demonstrate_basic_agentcore():
     critical_incidents = sum(1 for r in results if r.response_time > 3.0)
     low_confidence_responses = sum(1 for r in results if r.confidence < 0.6)
 
-    print("💼 STAGE 1: BUSINESS IMPACT ANALYSIS")
-    print("=" * 50)
+    print("💼 STAGE 1: AGENTCORE + DYNAMODB BUSINESS IMPACT ANALYSIS")
+    print("=" * 60)
+    print(f"🏗️  Architecture: AWS Bedrock AgentCore + DynamoDB (us-east-1)")
+    print(f"🗄️  Data Store: AgentCoreContextStore table")
+    print(f"🔄 Context Storage: Conversations and knowledge stored in DynamoDB")
+    print()
     print(f"📊 Performance Metrics:")
     print(f"   • Average Response Time: {avg_response_time:.2f}s (TARGET: <1.0s)")
     print(f"   • Average AI Confidence: {avg_confidence:.2f} (TARGET: >0.9)")
@@ -348,28 +444,34 @@ def demonstrate_basic_agentcore():
     print(f"   • Average Cost per Incident: ${total_business_cost/len(results):,.0f}")
     print(f"   • Annual Projected Loss: ${total_business_cost * 365:,.0f}")
     print()
-    print("🚨 CRITICAL BUSINESS LIMITATIONS:")
-    print("   ❌ Slow incident response (3.2s avg) = Revenue loss")
-    print("   ❌ Low accuracy (60%) = Wrong solutions deployed")
-    print("   ❌ No semantic understanding = Missed critical patterns")
-    print("   ❌ No relationship modeling = Incomplete context")
-    print("   ❌ Basic keyword matching = Poor enterprise search")
-    print("   ❌ No real-time analytics = Reactive instead of proactive")
+    print("🚨 CURRENT LIMITATIONS (AgentCore + DynamoDB):")
+    print("   ❌ Still slow response times (keyword search limitations)")
+    print("   ❌ No semantic understanding (basic text matching)")
+    print("   ❌ No vector similarity search (missing in DynamoDB)")
+    print("   ❌ No relationship modeling (no graph capabilities)")
+    print("   ❌ Limited real-time analytics (basic time-series)")
+    print("   ❌ No proactive insights (reactive query model)")
     print()
-    print("📈 ENTERPRISE REQUIREMENTS NOT MET:")
-    print("   • Sub-second response times for critical incidents")
-    print("   • >90% accuracy for automated incident resolution")
-    print("   • Semantic understanding of complex technical issues")
-    print("   • Relationship awareness across systems and users")
-    print("   • Real-time performance monitoring and optimization")
-    print("   • Proactive issue detection and prevention")
+    print("✅ WHAT AGENTCORE + DYNAMODB PROVIDES:")
+    print("   ✅ Persistent context storage")
+    print("   ✅ Conversation history tracking")
+    print("   ✅ Scalable data storage")
+    print("   ✅ AWS-native integration")
+    print()
+    print("🎯 WHAT'S STILL MISSING (Why we need Tacnode):")
+    print("   • Vector embeddings for semantic search")
+    print("   • Graph relationships for context understanding")
+    print("   • Real-time analytics for performance optimization")
+    print("   • Multi-modal data integration")
+    print("   • Sub-second query performance")
+    print("   • Proactive pattern detection")
     print()
 
     return results
 
 if __name__ == "__main__":
     # Run the demonstration
-    results = demonstrate_basic_agentcore()
+    results = demonstrate_agentcore_with_dynamodb()
 
     # Save results for comparison
     output_file = "data/performance_metrics/stage1_results.json"
