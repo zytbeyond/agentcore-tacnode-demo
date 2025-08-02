@@ -1,0 +1,7 @@
+{
+  "customJWTAuthorizer": {
+    "discoveryUrl": "https://tacnode.com/.well-known/openid_configuration",
+    "allowedAudience": ["tacnode-context-lake"],
+    "allowedClients": ["agentcore-gateway"]
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "mcp": {
+    "supportedVersions": ["2024-11-05"],
+    "instructions": "Gateway for connecting to Tacnode Context Lake for real-time data processing and analytics",
+    "searchType": "SEMANTIC"
+  }
+}
