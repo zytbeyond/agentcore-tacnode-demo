@@ -1,0 +1,9 @@
+{
+  "repository_uri": "560155322832.dkr.ecr.us-east-1.amazonaws.com/tacnode-agentcore-runtime",
+  "image_name": "560155322832.dkr.ecr.us-east-1.amazonaws.com/tacnode-agentcore-runtime:latest",
+  "account_id": "560155322832",
+  "region": "us-east-1",
+  "repository_name": "tacnode-agentcore-runtime",
+  "image_tag": "latest",
+  "deployed_at": "2025-08-04T11:43:44.342903"
+}

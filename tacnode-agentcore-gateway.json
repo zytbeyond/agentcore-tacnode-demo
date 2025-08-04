@@ -1,0 +1,38 @@
+{
+  "gatewayArn": "arn:aws:bedrock-agentcore:us-east-1:560155322832:gateway/tacnodecontextlakegateway-bkq6ozcvxp",
+  "gatewayId": "tacnodecontextlakegateway-bkq6ozcvxp",
+  "gatewayUrl": "https://tacnodecontextlakegateway-bkq6ozcvxp.gateway.bedrock-agentcore.us-east-1.amazonaws.com/mcp",
+  "createdAt": "2025-08-04T10:44:07.404923+00:00",
+  "updatedAt": "2025-08-04T10:44:07.404936+00:00",
+  "status": "CREATING",
+  "name": "TACNodeContextLakeGateway",
+  "description": "AgentCore Gateway for TACNode Context Lake real-time data access",
+  "roleArn": "arn:aws:iam::560155322832:role/AmazonBedrockAgentCoreGatewayServiceRole",
+  "protocolType": "MCP",
+  "protocolConfiguration": {
+    "mcp": {
+      "supportedVersions": [
+        "2025-03-26"
+      ],
+      "instructions": "Gateway for connecting Bedrock AgentCore to TACNode Context Lake for real-time data analytics and AI-driven insights",
+      "searchType": "SEMANTIC"
+    }
+  },
+  "authorizerType": "CUSTOM_JWT",
+  "authorizerConfiguration": {
+    "customJWTAuthorizer": {
+      "discoveryUrl": "https://accounts.google.com/.well-known/openid-configuration",
+      "allowedAudience": [
+        "tacnode-context-lake",
+        "agentcore"
+      ],
+      "allowedClients": [
+        "agentcore-gateway",
+        "tacnode-client"
+      ]
+    }
+  },
+  "workloadIdentityDetails": {
+    "workloadIdentityArn": "arn:aws:bedrock-agentcore:us-east-1:560155322832:workload-identity-directory/default/workload-identity/tacnodecontextlakegateway-bkq6ozcvxp"
+  }
+}

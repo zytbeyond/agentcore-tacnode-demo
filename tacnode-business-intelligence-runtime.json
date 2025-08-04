@@ -1,0 +1,9 @@
+{
+  "runtimeArn": "arn:aws:bedrock-agentcore:us-east-1:560155322832:runtime/TACNodeBusinessIntelligenceAgent-WyUKPc8jfZ",
+  "runtimeId": "TACNodeBusinessIntelligenceAgent-WyUKPc8jfZ",
+  "containerUri": "560155322832.dkr.ecr.us-east-1.amazonaws.com/tacnode-agentcore-runtime:agentcore-corrected-gateway",
+  "architecture": "linux/arm64",
+  "agentType": "business-intelligence",
+  "gatewayIntegration": true,
+  "createdAt": "2025-08-04T13:36:17.911981"
+}

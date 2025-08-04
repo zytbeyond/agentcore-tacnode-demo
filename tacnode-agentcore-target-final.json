@@ -1,0 +1,29 @@
+{
+  "gatewayArn": "arn:aws:bedrock-agentcore:us-east-1:560155322832:gateway/tacnodecontextlakegateway-bkq6ozcvxp",
+  "targetId": "QWCKSQKFH6",
+  "createdAt": "2025-08-04T10:47:22.755954+00:00",
+  "updatedAt": "2025-08-04T10:47:22.755964+00:00",
+  "status": "CREATING",
+  "name": "TACNodeContextLake",
+  "description": "TACNode Context Lake MCP Server for real-time data analytics",
+  "targetConfiguration": {
+    "mcp": {
+      "openApiSchema": {
+        "inlinePayload": "{\"openapi\": \"3.0.0\", \"info\": {\"title\": \"TACNode MCP Server\", \"version\": \"1.0.0\", \"description\": \"TACNode Context Lake MCP Server for real-time data analytics\"}, \"servers\": [{\"url\": \"https://mcp-server.tacnode.io/mcp\"}], \"paths\": {\"/\": {\"post\": {\"summary\": \"Execute MCP request\", \"operationId\": \"executeMCPRequest\", \"requestBody\": {\"required\": true, \"content\": {\"application/json\": {\"schema\": {\"type\": \"object\", \"properties\": {\"jsonrpc\": {\"type\": \"string\", \"example\": \"2.0\"}, \"method\": {\"type\": \"string\", \"example\": \"tools/call\"}, \"params\": {\"type\": \"object\", \"properties\": {\"name\": {\"type\": \"string\", \"example\": \"query\"}, \"arguments\": {\"type\": \"object\", \"properties\": {\"sql\": {\"type\": \"string\", \"example\": \"SELECT * FROM test LIMIT 10\"}}}}}, \"id\": {\"type\": \"integer\", \"example\": 1}}, \"required\": [\"jsonrpc\", \"method\", \"id\"]}}}}, \"responses\": {\"200\": {\"description\": \"Successful MCP response\", \"content\": {\"application/json\": {\"schema\": {\"type\": \"object\", \"properties\": {\"jsonrpc\": {\"type\": \"string\"}, \"result\": {\"type\": \"object\"}, \"id\": {\"type\": \"integer\"}}}}}}}}}}}"
+      }
+    }
+  },
+  "credentialProviderConfigurations": [
+    {
+      "credentialProviderType": "API_KEY",
+      "credentialProvider": {
+        "apiKeyCredentialProvider": {
+          "providerArn": "arn:aws:bedrock-agentcore:us-east-1:560155322832:token-vault/default/apikeycredentialprovider/TACNodeAPIKeyProvider",
+          "credentialParameterName": "Authorization",
+          "credentialPrefix": "Bearer ",
+          "credentialLocation": "HEADER"
+        }
+      }
+    }
+  ]
+}
