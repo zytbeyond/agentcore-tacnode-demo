@@ -1,9 +1,0 @@
-{
-  "userPoolId": "us-east-1_j2hhA2nBw",
-  "userPoolArn": "arn:aws:cognito-idp:us-east-1:560155322832:userpool/us-east-1_j2hhA2nBw",
-  "clientId": "798sp78jgosgq2g9ium1v1a37j",
-  "region": "us-east-1",
-  "jwksUrl": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_j2hhA2nBw/.well-known/jwks.json",
-  "issuer": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_j2hhA2nBw",
-  "created": "2025-08-12T12:14:14.188167"
-}

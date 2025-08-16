@@ -66,6 +66,20 @@ github-mcp-server/github-mcp-server
 *.pem
 github_token
 .github_token
+tacnode_token.txt
+
+# AWS and AgentCore configuration files with sensitive data
+*-config.json
+*-cognito-config.json
+*-gateway-config.json
+*-lambda-config.json
+augment-*-config.json
+fresh-env-*-config.json
+
+# AWS credentials
+.aws/
+aws-credentials
+credentials.json
 
 # MCP server builds
 mcp-servers/
