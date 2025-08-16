@@ -76,7 +76,7 @@ def create_lambda_function(tacnode_token):
     import io
     
     # Lambda code that handles AgentCore Gateway requests
-    lambda_code = f'''
+    lambda_code = '''
 import json
 import urllib3
 import os
@@ -85,11 +85,24 @@ def lambda_handler(event, context):
     """
     Lambda function to bridge AgentCore Gateway requests to TACNode
     """
-    
-    print(f"🔍 Received event: {{json.dumps(event, indent=2)}}")
-    
-    # TACNode token from environment
-    tacnode_token = "{tacnode_token}"
+
+    print(f"🔍 Received event: {json.dumps(event, indent=2)}")
+
+    # TACNode token from environment variable
+    tacnode_token = os.environ.get('TACNODE_TOKEN')
+    if not tacnode_token:
+        return {
+            'statusCode': 500,
+            'headers': {'Content-Type': 'application/json'},
+            'body': json.dumps({
+                'jsonrpc': '2.0',
+                'error': {
+                    'code': -32603,
+                    'message': 'TACNode token not configured in environment'
+                },
+                'id': 1
+            })
+        }
     
     try:
         # AgentCore Gateway sends the SQL parameter directly
@@ -258,7 +271,12 @@ def lambda_handler(event, context):
             Handler='lambda_function.lambda_handler',
             Code={'ZipFile': zip_buffer.getvalue()},
             Description='Fresh environment - AgentCore Gateway to TACNode bridge',
-            Timeout=30
+            Timeout=30,
+            Environment={
+                'Variables': {
+                    'TACNODE_TOKEN': tacnode_token
+                }
+            }
         )
         
         lambda_arn = response['FunctionArn']
@@ -271,7 +289,17 @@ def lambda_handler(event, context):
             FunctionName=function_name,
             ZipFile=zip_buffer.getvalue()
         )
-        
+
+        # Update environment variables
+        lambda_client.update_function_configuration(
+            FunctionName=function_name,
+            Environment={
+                'Variables': {
+                    'TACNODE_TOKEN': tacnode_token
+                }
+            }
+        )
+
         response = lambda_client.get_function(FunctionName=function_name)
         lambda_arn = response['Configuration']['FunctionArn']
         print(f"✅ Updated Lambda function: {lambda_arn}")
