@@ -1,0 +1,28 @@
+{
+  "gateway": {
+    "id": "LAMBDA_URL",
+    "url": "https://4g4jfa53hzr7znxcfhk5rquocq0qgfgo.lambda-url.us-east-1.on.aws/",
+    "name": "augment-real-gateway"
+  },
+  "target": {
+    "id": "DIRECT",
+    "name": "augment-lambda-tacnode-target"
+  },
+  "lambda": {
+    "functionName": "augment-tacnode-proxy-1755237143"
+  },
+  "tacnode": {
+    "endpoint": "https://mcp-server.tacnode.io/mcp",
+    "database": "postgres",
+    "table": "test"
+  },
+  "cognito": {
+    "userPoolId": "us-east-1_qVOK14gn5",
+    "clientId": "629cm5j58a7o0lhh1qph1re0l5",
+    "clientSecret": "t7uo744afdgrlasjgqe0rsdasdm8ovg91otr12guk4jq79c3d64",
+    "tokenEndpoint": "https://us-east-1-qvok14gn5.auth.us-east-1.amazoncognito.com/oauth2/token"
+  },
+  "created_by": "Augment Agent",
+  "created_at": "2025-08-15 06:00:57 UTC",
+  "type": "real_gateway_with_lambda"
+}

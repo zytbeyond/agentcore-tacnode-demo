@@ -1,0 +1,112 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "TACNode Context Lake API - Corrected",
+    "version": "1.0.0",
+    "description": "Corrected API for accessing TACNode Context Lake database via JSON-RPC 2.0"
+  },
+  "servers": [
+    {
+      "url": "https://mcp-server.tacnode.io"
+    }
+  ],
+  "paths": {
+    "/mcp": {
+      "post": {
+        "summary": "Execute TACNode JSON-RPC Call",
+        "description": "Execute JSON-RPC call to TACNode Context Lake",
+        "operationId": "executeQuery",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "jsonrpc": {
+                    "type": "string",
+                    "enum": ["2.0"],
+                    "description": "JSON-RPC version"
+                  },
+                  "method": {
+                    "type": "string",
+                    "enum": ["tools/call"],
+                    "description": "JSON-RPC method name"
+                  },
+                  "params": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "enum": ["query"],
+                        "description": "Tool name to call"
+                      },
+                      "arguments": {
+                        "type": "object",
+                        "properties": {
+                          "sql": {
+                            "type": "string",
+                            "description": "SQL query to execute"
+                          }
+                        },
+                        "required": ["sql"]
+                      }
+                    },
+                    "required": ["name", "arguments"]
+                  },
+                  "id": {
+                    "type": "integer",
+                    "description": "Request ID for JSON-RPC"
+                  }
+                },
+                "required": ["jsonrpc", "method", "params", "id"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "JSON-RPC 2.0 response from TACNode",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "jsonrpc": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "integer"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "content": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string"
+                              },
+                              "text": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "isError": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

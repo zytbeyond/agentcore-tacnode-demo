@@ -1,0 +1,6 @@
+{
+  "functionName": "tacnode-mcp-to-api-proxy",
+  "functionArn": "arn:aws:lambda:us-east-1:560155322832:function:tacnode-mcp-to-api-proxy",
+  "description": "MCP to TACNode API proxy",
+  "deployed": "2025-08-11T14:42:36.636425"
+}

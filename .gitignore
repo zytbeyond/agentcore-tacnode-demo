@@ -80,3 +80,5 @@ coverage/
 # Backup files
 *.bak
 *.backup
+Archive_20250816/github-mcp-server/
+Archive_20250816/mcp-playwright/

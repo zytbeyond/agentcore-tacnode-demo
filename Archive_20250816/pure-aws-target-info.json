@@ -1,0 +1,25 @@
+{
+  "targetId": "TGK8WM9V22",
+  "gatewayId": "pureawstacnodegateway-l0f1tg5t8o",
+  "name": "pure-aws-tacnode-target",
+  "targetConfiguration": {
+    "mcp": {
+      "openApiSchema": {
+        "inlinePayload": "{\"openapi\": \"3.0.0\", \"info\": {\"title\": \"TACNode Context Lake API\", \"version\": \"1.0.0\", \"description\": \"API for accessing TACNode Context Lake database via JSON-RPC 2.0\"}, \"servers\": [{\"url\": \"https://mcp-server.tacnode.io\"}], \"paths\": {\"/mcp\": {\"post\": {\"summary\": \"Execute SQL Query\", \"description\": \"Execute SQL query on TACNode Context Lake using JSON-RPC 2.0\", \"operationId\": \"executeQuery\", \"requestBody\": {\"required\": true, \"content\": {\"application/json\": {\"schema\": {\"type\": \"object\", \"properties\": {\"jsonrpc\": {\"type\": \"string\", \"enum\": [\"2.0\"], \"default\": \"2.0\"}, \"id\": {\"type\": \"integer\", \"default\": 1}, \"method\": {\"type\": \"string\", \"enum\": [\"tools/call\"]}, \"params\": {\"type\": \"object\", \"properties\": {\"name\": {\"type\": \"string\", \"enum\": [\"query\"]}, \"arguments\": {\"type\": \"object\", \"properties\": {\"sql\": {\"type\": \"string\", \"description\": \"SQL query to execute\"}}, \"required\": [\"sql\"]}}, \"required\": [\"name\", \"arguments\"]}}, \"required\": [\"jsonrpc\", \"id\", \"method\", \"params\"]}}}}, \"responses\": {\"200\": {\"description\": \"JSON-RPC 2.0 response with query results\", \"content\": {\"application/json\": {\"schema\": {\"type\": \"object\", \"properties\": {\"jsonrpc\": {\"type\": \"string\"}, \"id\": {\"type\": \"integer\"}, \"result\": {\"type\": \"object\", \"properties\": {\"content\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"properties\": {\"type\": {\"type\": \"string\"}, \"text\": {\"type\": \"string\"}}}}, \"isError\": {\"type\": \"boolean\"}}}, \"error\": {\"type\": \"object\", \"properties\": {\"code\": {\"type\": \"integer\"}, \"message\": {\"type\": \"string\"}}}}}}}}}}}}}"
+      }
+    }
+  },
+  "credentialProviderConfigurations": [
+    {
+      "credentialProviderType": "API_KEY",
+      "credentialProvider": {
+        "apiKeyCredentialProvider": {
+          "providerArn": "arn:aws:bedrock-agentcore:us-east-1:560155322832:token-vault/default/apikeycredentialprovider/TACNodeAPIKeyProvider",
+          "credentialParameterName": "Authorization",
+          "credentialPrefix": "Bearer ",
+          "credentialLocation": "HEADER"
+        }
+      }
+    }
+  ],
+  "created": 

@@ -1,0 +1,17 @@
+{
+  "lambda": {
+    "functionName": "augment-tacnode-proxy-1755237143",
+    "functionArn": "arn:aws:lambda:us-east-1:560155322832:function:augment-tacnode-proxy-1755237143",
+    "roleArn": "arn:aws:iam::560155322832:role/augment-tacnode-lambda-role-1755237113"
+  },
+  "tacnode": {
+    "endpoint": "https://mcp-server.tacnode.io/mcp",
+    "database": "postgres",
+    "table": "test",
+    "responseFormat": "text/event-stream",
+    "proxyType": "lambda"
+  },
+  "created_by": "Augment Agent",
+  "created_at": "2025-08-15 05:52:39 UTC",
+  "notes": "Lambda function proxies TACNode SSE responses to clean JSON"
+}

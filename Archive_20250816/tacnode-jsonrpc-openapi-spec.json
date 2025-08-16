@@ -1,0 +1,198 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "TACNode JSON-RPC API",
+    "description": "Direct API access to TACNode Context Lake via JSON-RPC 2.0",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://mcp-server.tacnode.io",
+      "description": "TACNode JSON-RPC API Server"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "paths": {
+    "/jsonrpc": {
+      "post": {
+        "summary": "Execute JSON-RPC 2.0 calls to TACNode",
+        "description": "Direct JSON-RPC 2.0 interface to TACNode Context Lake",
+        "operationId": "executeJsonRpc",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "jsonrpc": {
+                    "type": "string",
+                    "enum": [
+                      "2.0"
+                    ]
+                  },
+                  "id": {
+                    "type": "integer"
+                  },
+                  "method": {
+                    "type": "string",
+                    "enum": [
+                      "query",
+                      "schemas",
+                      "tables_in_schema",
+                      "table_structure",
+                      "indexes",
+                      "procedures"
+                    ]
+                  },
+                  "params": {
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "jsonrpc",
+                  "id",
+                  "method"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "JSON-RPC 2.0 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "jsonrpc": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "integer"
+                    },
+                    "result": {
+                      "type": "object"
+                    },
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/query": {
+      "post": {
+        "summary": "Execute SQL Query",
+        "description": "Execute SQL query on TACNode Context Lake",
+        "operationId": "executeQuery",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sql": {
+                    "type": "string",
+                    "description": "SQL query to execute"
+                  }
+                },
+                "required": [
+                  "sql"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Query results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/schemas": {
+      "get": {
+        "summary": "List Database Schemas",
+        "description": "Returns a list of all schemas in the database",
+        "operationId": "listSchemas",
+        "responses": {
+          "200": {
+            "description": "List of schemas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/schemas/{schemaName}/tables": {
+      "get": {
+        "summary": "List Tables in Schema",
+        "description": "Returns a list of all tables in a specific schema",
+        "operationId": "listTablesInSchema",
+        "parameters": [
+          {
+            "name": "schemaName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of tables",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

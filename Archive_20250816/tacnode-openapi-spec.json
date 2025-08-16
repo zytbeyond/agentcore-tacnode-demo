@@ -1,0 +1,93 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "TACNode Context Lake API",
+    "description": "API for accessing TACNode Context Lake database",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.tacnode.io",
+      "description": "TACNode API Server"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "paths": {
+    "/query": {
+      "post": {
+        "summary": "Execute SQL Query",
+        "description": "Execute single or multiple SQL statements on TACNode Context Lake",
+        "operationId": "executeQuery",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sql": {
+                    "type": "string",
+                    "description": "SQL query to execute"
+                  }
+                },
+                "required": [
+                  "sql"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Query executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/schemas": {
+      "get": {
+        "summary": "List Database Schemas",
+        "description": "Returns a list of all schemas in the database",
+        "operationId": "listSchemas",
+        "responses": {
+          "200": {
+            "description": "List of schemas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

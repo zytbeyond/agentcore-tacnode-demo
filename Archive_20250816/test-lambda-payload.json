@@ -1,0 +1,11 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "executeQuery",
+    "arguments": {
+      "sql": "SELECT COUNT(*) as record_count FROM test WHERE is_active = true"
+    }
+  }
+}

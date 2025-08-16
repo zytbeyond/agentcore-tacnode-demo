@@ -1,0 +1,173 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "TACNode Context Lake API",
+    "description": "API for accessing TACNode Context Lake database resources and tools",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.tacnode.io",
+      "description": "TACNode API Server"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "paths": {
+    "/schemas": {
+      "get": {
+        "summary": "List Database Schemas",
+        "description": "Returns a list of all schemas in the database",
+        "operationId": "listSchemas",
+        "responses": {
+          "200": {
+            "description": "List of schemas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "schemas": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/schemas/{schemaName}/tables": {
+      "get": {
+        "summary": "List Tables in Schema",
+        "description": "Returns a list of all tables in the database or within a specific schema",
+        "operationId": "listTablesInSchema",
+        "parameters": [
+          {
+            "name": "schemaName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Name of the schema"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of tables",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "tables": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/schemas/{schemaName}/tables/{tableName}": {
+      "get": {
+        "summary": "Get Table Structure",
+        "description": "Returns schema information for a specific table",
+        "operationId": "getTableStructure",
+        "parameters": [
+          {
+            "name": "schemaName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tableName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Table structure information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/query": {
+      "post": {
+        "summary": "Execute SQL Query",
+        "description": "Execute single or multiple SQL statements",
+        "operationId": "executeQuery",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sql": {
+                    "type": "string",
+                    "description": "SQL query to execute"
+                  }
+                },
+                "required": [
+                  "sql"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Query results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

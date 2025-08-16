@@ -1,0 +1,49 @@
+{
+  "gatewayId": "pureawstacnodegateway-l0f1tg5t8o",
+  "targetId": "XXVXVNHOV9",
+  "credentialProviderArn": "arn:aws:bedrock-agentcore:us-east-1:560155322832:token-vault/default/apikeycredentialprovider/tacnode-mcp-token",
+  "credentialProviderName": "tacnode-mcp-token",
+  "openApiSchema": {
+    "openapi": "3.0.1",
+    "info": {
+      "title": "Tacnode MCP",
+      "version": "1"
+    },
+    "servers": [
+      {
+        "url": "https://mcp-server.tacnode.io"
+      }
+    ],
+    "paths": {
+      "/mcp": {
+        "post": {
+          "operationId": "tools_call",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "credentialConfiguration": {
+    "credentialLocation": "HEADER",
+    "credentialParameterName": "Authorization",
+    "credentialPrefix": "Bearer "
+  },
+  "status": "READY"
+}

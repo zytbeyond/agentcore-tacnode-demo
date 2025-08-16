@@ -1,0 +1,8 @@
+{
+  "userPoolId": "us-east-1_2OFgNMuMX",
+  "clientId": "4nf1a2ehtm7v79hvedacpceb47",
+  "clientSecret": "14l95a9vc3hv710lgjvjvr7cj3m5u0rvndapni6hhf7tri4ui5ma",
+  "discoveryUrl": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_2OFgNMuMX/.well-known/openid-configuration",
+  "tokenEndpoint": "https://us-east-12ofgnmumx.auth.us-east-1.amazoncognito.com/oauth2/token",
+  "domain": "us-east-12ofgnmumx"
+}

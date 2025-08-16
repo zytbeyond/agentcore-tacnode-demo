@@ -1,0 +1,8 @@
+{
+  "functionName": "tacnode-mcp-proxy",
+  "functionArn": "arn:aws:lambda:us-east-1:560155322832:function:tacnode-mcp-proxy",
+  "role": "arn:aws:iam::560155322832:role/tacnode-mcp-proxy-role",
+  "runtime": "python3.9",
+  "handler": "lambda_function.lambda_handler",
+  "deployed": "2025-08-11T14:00:26.719158"
+}

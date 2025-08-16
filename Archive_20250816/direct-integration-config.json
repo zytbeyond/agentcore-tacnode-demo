@@ -1,0 +1,11 @@
+{
+  "gatewayId": "pureawstacnodegateway-l0f1tg5t8o",
+  "targetId": "OWU4CASS93",
+  "credentialProviderArn": "arn:aws:bedrock-agentcore:us-east-1:560155322832:token-vault/default/apikeycredentialprovider/TACNodeDirectProvider",
+  "credentialProviderName": "TACNodeDirectProvider",
+  "secretArn": "arn:aws:secretsmanager:us-east-1:560155322832:secret:tacnode-direct-token-8vXXZ1",
+  "credentialLocation": "HEADER",
+  "credentialParameterName": "Authorization",
+  "credentialPrefix": "Bearer ",
+  "status": "READY"
+}

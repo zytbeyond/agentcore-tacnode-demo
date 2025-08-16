@@ -1,0 +1,7 @@
+{
+  "targetId": "DPIFZHYYX1",
+  "gatewayId": "pureawstacnodegateway-l0f1tg5t8o",
+  "name": "final-working-tacnode-target",
+  "credentialProviderArn": "arn:aws:bedrock-agentcore:us-east-1:560155322832:token-vault/default/apikeycredentialprovider/TACNodeAPIKeyFixed",
+  "status": "READY"
+}

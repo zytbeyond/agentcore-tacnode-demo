@@ -1,0 +1,10 @@
+{
+  "targetName": "tacnode-context-lake",
+  "targetId": "HOQQDQDBVA",
+  "gatewayId": "tacnodecontextlakegateway-bkq6ozcvxp",
+  "type": "MCP_OPENAPI_TACNODE",
+  "credentialProvider": "arn:aws:secretsmanager:us-east-1:560155322832:secret:tacnode-api-key-ea7WnW",
+  "server": "https://mcp-server.tacnode.io",
+  "endpoint": "/mcp",
+  "created": "2025-08-12T05:20:28.295429"
+}

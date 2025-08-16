@@ -1,0 +1,7 @@
+{
+  "gatewayId": "pureawstacnodegateway-l0f1tg5t8o",
+  "targetId": "WXIO6JIDHI",
+  "credentialProviderArn": "arn:aws:bedrock-agentcore:us-east-1:560155322832:token-vault/default/apikeycredentialprovider/TACNodeWorkingToken",
+  "credentialProviderName": "TACNodeWorkingToken",
+  "status": "READY"
+}

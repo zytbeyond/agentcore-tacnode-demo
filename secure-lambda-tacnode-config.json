@@ -1,0 +1,25 @@
+{
+  "lambda": {
+    "functionName": "secure-tacnode-proxy-1755248066",
+    "functionArn": "arn:aws:lambda:us-east-1:560155322832:function:secure-tacnode-proxy-1755248066",
+    "roleArn": "arn:aws:iam::560155322832:role/SecureTACNodeLambdaRole-1755248036",
+    "roleName": "SecureTACNodeLambdaRole-1755248036"
+  },
+  "security": {
+    "openPolicies": false,
+    "publicAccess": false,
+    "minimalPrivileges": true,
+    "specificPrincipalOnly": true,
+    "noFunctionUrl": true
+  },
+  "tacnode": {
+    "endpoint": "https://mcp-server.tacnode.io/mcp",
+    "database": "postgres",
+    "table": "test",
+    "responseFormat": "text/event-stream",
+    "proxyType": "secure_lambda"
+  },
+  "created_by": "Augment Agent",
+  "created_at": "2025-08-15 08:54:43 UTC",
+  "security_notes": "Lambda created with minimal privileges, no open policies, specific Gateway access only"
+}

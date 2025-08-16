@@ -1,0 +1,30 @@
+{
+  "base_url": "https://api.tacnode.io",
+  "database_resources": {
+    "schemas": {
+      "path": "/schemas",
+      "method": "GET",
+      "description": "Returns a list of all schemas in the database"
+    },
+    "tables_in_schema": {
+      "path": "/schemas/{schemaName}/tables",
+      "method": "GET",
+      "description": "Returns a list of all tables in the database or within a specific schema"
+    },
+    "table_structure": {
+      "path": "/schemas/{schemaName}/tables/{tableName}",
+      "method": "GET",
+      "description": "Returns schema information for a specific table"
+    }
+  },
+  "database_tools": {
+    "execute_sql": {
+      "path": "/query",
+      "method": "POST",
+      "description": "Execute single or multiple SQL statements",
+      "body": {
+        "sql": "string"
+      }
+    }
+  }
+}
