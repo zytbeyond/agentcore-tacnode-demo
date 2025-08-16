@@ -1,8 +1,9 @@
 {
-  "userPoolId": "us-east-1_2OFgNMuMX",
-  "clientId": "4nf1a2ehtm7v79hvedacpceb47",
-  "clientSecret": "14l95a9vc3hv710lgjvjvr7cj3m5u0rvndapni6hhf7tri4ui5ma",
-  "discoveryUrl": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_2OFgNMuMX/.well-known/openid-configuration",
-  "tokenEndpoint": "https://us-east-12ofgnmumx.auth.us-east-1.amazoncognito.com/oauth2/token",
-  "domain": "us-east-12ofgnmumx"
+  "userPoolId": "us-east-1_j2hhA2nBw",
+  "userPoolArn": "arn:aws:cognito-idp:us-east-1:560155322832:userpool/us-east-1_j2hhA2nBw",
+  "clientId": "798sp78jgosgq2g9ium1v1a37j",
+  "region": "us-east-1",
+  "jwksUrl": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_j2hhA2nBw/.well-known/jwks.json",
+  "issuer": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_j2hhA2nBw",
+  "created": "2025-08-12T12:14:14.188167"
 }

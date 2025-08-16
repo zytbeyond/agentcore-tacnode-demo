@@ -1,0 +1,30 @@
+{
+  "lambda": {
+    "lambda_arn": "arn:aws:lambda:us-east-1:560155322832:function:augment-tacnode-bridge",
+    "lambda_name": "augment-tacnode-bridge",
+    "tacnode_endpoint": "https://mcp-server.tacnode.io/mcp",
+    "database": "postgres",
+    "table": "test",
+    "created_at": "2025-08-16T13:34:24.337731"
+  },
+  "cognito": {
+    "client_id": "3j3k9br7n87tv1h8un0ldlak87",
+    "client_secret": "152mm78irvluo0uumcekb6cj3uo7o6rsa7fp48dl77sie3b5a039",
+    "token_url": "https://agentcore-9a722e19.auth.us-east-1.amazoncognito.com/oauth2/token",
+    "scope": "AugmentTACNodeGateway/invoke",
+    "authorizer_config": {
+      "customJWTAuthorizer": {
+        "allowedClients": [
+          "3j3k9br7n87tv1h8un0ldlak87"
+        ],
+        "discoveryUrl": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_xUFrUQADA/.well-known/openid-configuration"
+      }
+    }
+  },
+  "gateway": {
+    "gateway_id": "augment-tacnode-gateway-1755354262-aubwll70tm",
+    "gateway_url": "https://augment-tacnode-gateway-1755354262-aubwll70tm.gateway.bedrock-agentcore.us-east-1.amazonaws.com/mcp",
+    "target_id": "LDTSYUYDJP"
+  },
+  "created_at": "2025-08-16T14:24:27.051710"
+}
